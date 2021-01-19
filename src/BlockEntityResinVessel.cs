@@ -5,7 +5,7 @@ using Vintagestory.GameContent;
 using Vintagestory.API.MathTools;
 using Newtonsoft.Json.Linq;
 
-namespace resinvessel
+namespace ResinVessel
 {
     public class BlockEntityResinVessel : BlockEntityGenericTypedContainer
     {

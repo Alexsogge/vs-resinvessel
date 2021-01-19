@@ -2,7 +2,7 @@
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 
-namespace resinvessel
+namespace ResinVessel
 {
     public class BlockBehaviorResinVessel : BlockBehavior
     {

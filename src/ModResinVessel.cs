@@ -12,7 +12,7 @@ using Vintagestory.API.MathTools;
 using Newtonsoft.Json.Linq;
 using Vintagestory.API.Server;
 
-namespace resinvessel
+namespace ResinVessel
 {
     class ModResinVessel : ModSystem
     {

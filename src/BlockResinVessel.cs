@@ -1,6 +1,6 @@
 ﻿using Vintagestory.API.Common;
 
-namespace resinvessel
+namespace ResinVessel
 {
     public class BlockResinVessel : Block
     {
