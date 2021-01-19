@@ -66,7 +66,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Compile Include="src\resinvessel.cs" />
+    <Compile Include="src\BlockResinVessel.cs" />
+    <Compile Include="src\BlockEntityResinVessel.cs" />
+    <Compile Include="src\BlockBehaviorResinVessel.cs" />
+    <Compile Include="src\ModResinVessel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\resinvessel\blocktypes\resinvessel.json" />
