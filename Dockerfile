@@ -21,6 +21,6 @@ RUN cp /game/Lib/* /code/lib
 
 RUN msbuild resinvessel.csproj -property:Configuration=Release
 
-RUN mkdir /release && cp code/bin/Release/resinvessel/resinvessel.dll /release && cp -r /game/assets /release && cp modinfo.json /release
+RUN mkdir /release && cp /code/bin/Release/resinvessel/resinvessel.dll /release && cp -r /game/assets /release && cp modinfo.json /release
 
 RUN zip -r /release.zip /release
