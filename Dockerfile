@@ -24,5 +24,5 @@ RUN msbuild resinvessel.csproj -property:Configuration=Release
 RUN mkdir /release
 WORKDIR /release
 
-RUN cp /code/bin/Release/resinvessel/resinvessel.dll . && cp -r /code/assets . && cp modinfo.json .
+RUN cp /code/bin/Release/resinvessel/resinvessel.dll . && cp -r /code/assets . && cp /code/modinfo.json .
 RUN zip -r /ResinVessel.zip *
