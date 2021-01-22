@@ -4,7 +4,7 @@ Instead you can gather it all together after several ingame weeks, or whenever y
 
 Build status: [![CircleCI](https://circleci.com/gh/Alexsogge/vs-resinvessel.svg?style=shield )](https://circleci.com/gh/circleci/circleci-docs)
 
-![vessel on log](docs/images/emptyvessel_resinlog.png?raw=true "vessel on log" | width=100) ![vessel filled](docs/images/filledvessel.png?raw=true "vessel filled" | width=100)
+![vessel on log](docs/images/emptyvessel_resinlog.png?raw=true | width=100) ![vessel filled](docs/images/filledvessel.png?raw=true | width=100)
 
 ## How to install
 
