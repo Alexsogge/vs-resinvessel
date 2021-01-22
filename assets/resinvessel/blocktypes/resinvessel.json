@@ -75,8 +75,8 @@
   "creativeinventory": { "general": [ "resinvessel-raw-empty-east", "resinvessel-burned-empty-east", "resinvessel-burned-filled-east" ] },
   "texturesByType": {
     "*-raw-*": {
-      "ceramic": { "base": "game:block/clay/blueclay" },
-    },
+      "ceramic": { "base": "game:block/clay/blueclay" }
+    }
   },
   "sidesolid": {
     "all": false

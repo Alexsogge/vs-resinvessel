@@ -1,50 +1,69 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using Vintagestory.API.Common;
 using Vintagestory.API.Config;
+using Vintagestory.API.Datastructures;
 using Vintagestory.GameContent;
 using Vintagestory.API.MathTools;
 using Newtonsoft.Json.Linq;
+
 
 namespace ResinVessel
 {
     public class BlockEntityResinVessel : BlockEntityGenericTypedContainer
     {
-        public BlockPos leakingLogBlockPos;
-        public JProperty leakingLogTransientProps;
+        public double LastHarvested;
+
+        public BlockPos LeakingLogBlockPos;
+        private JProperty LeakingLogTransientProps;
         
-        public int inGameHours
+        public int InGameHours
         {
-            get { return (int) leakingLogTransientProps.Value["inGameHours"]; }
+            get { return (int) LeakingLogTransientProps.Value["inGameHours"]; }
         }
 
-        public string harvestBlockCode
+        public string HarvestBlockCode
         {
-            get { return (string) leakingLogTransientProps.Value["convertFrom"]; }
+            get { return (string) LeakingLogTransientProps.Value["convertFrom"]; }
         }
 
-        public string resinBlockCode
+        public string ResinBlockCode
         {
-            get { return (string) leakingLogTransientProps.Value["convertTo"]; }
+            get { return (string) LeakingLogTransientProps.Value["convertTo"]; }
         }
 
 
         public override void Initialize(ICoreAPI api)
         {
             base.Initialize(api);
-            RegisterGameTickListener(OnTickInChunk, 1000);
+            if (api.Side == EnumAppSide.Server)
+            {
+                RegisterGameTickListener(OnTickInChunk, 1000);
+            }
+
+            if (LastHarvested == 0)
+            {
+                LastHarvested = Api.World.Calendar.TotalHours;
+            }
+
             retrieveOnly = true;
         }
 
         public void OnTickInChunk(float par)
         {
-            if (leakingLogBlockPos != null)
+            if (LeakingLogBlockPos != null)
             {
-                Block leakingLogBlock = Api.World.BlockAccessor.GetBlock(leakingLogBlockPos);
+                Block leakingLogBlock = Api.World.BlockAccessor.GetBlock(LeakingLogBlockPos);
                 if (CheckLeakingLogBlock(leakingLogBlock))
                 {
-                    BlockBehaviorHarvestable harvestableLog = GetBlockBehaviorHarvestable(leakingLogBlock);
-                    HarvestResin(harvestableLog);
-                    ReplaceWithHarvested(leakingLogBlockPos);
+                    if (Api.Side == EnumAppSide.Server)
+                    {
+                        BlockBehaviorHarvestable harvestableLog = GetBlockBehaviorHarvestable(leakingLogBlock);
+                        HarvestResin(harvestableLog);
+                        ReplaceWithHarvested(LeakingLogBlockPos);
+                        LastHarvested = Api.World.Calendar.TotalHours;
+                        MarkDirty();
+                    }
                 }
             }
             else
@@ -79,7 +98,7 @@ namespace ResinVessel
                     Block leakingBlock = Api.World.BlockAccessor.GetBlock(blockPos);
                     if (CheckLeakingLogBlock(leakingBlock, false))
                     {
-                        leakingLogBlockPos = blockPos;
+                        LeakingLogBlockPos = blockPos;
                         UpdateTransientProps(blockPos);
                     }
                 }
@@ -120,7 +139,7 @@ namespace ResinVessel
         private void ReplaceWithHarvested(BlockPos blockPos)
         {
             Block leakingBlock = Api.World.BlockAccessor.GetBlock(blockPos);
-            AssetLocation harvestedLogBlockCode = AssetLocation.Create(harvestBlockCode, leakingBlock.Code.Domain);
+            AssetLocation harvestedLogBlockCode = AssetLocation.Create(HarvestBlockCode, leakingBlock.Code.Domain);
             Block harvestedLogBlock = Api.World.GetBlock(harvestedLogBlockCode);
             Api.World.BlockAccessor.SetBlock(harvestedLogBlock.BlockId, blockPos);
         }
@@ -128,20 +147,23 @@ namespace ResinVessel
         private void HarvestResin(BlockBehaviorHarvestable behavior)
         {
             ItemStack resinVesselstack = Inventory[0].Itemstack;
+            var missedHarvests = Math.Floor((Api.World.Calendar.TotalHours - LastHarvested) / InGameHours);
 
             float dropRate = 1; // normally multiplied with player harvestrate
 
             ItemStack resinLogStack = behavior.harvestedStack.GetNextItemStack(dropRate);
-            if (resinVesselstack != null)
-            {
-                if (resinVesselstack.Item.Code.Path == behavior.harvestedStack.Code.Path)
+            for (var i = 0; i < missedHarvests; i++) {
+                if (resinVesselstack != null)
                 {
-                    resinVesselstack.StackSize += resinLogStack.StackSize;
+                    if (resinVesselstack.Item.Code.Path == behavior.harvestedStack.Code.Path)
+                    {
+                        resinVesselstack.StackSize += resinLogStack.StackSize;
+                    }
                 }
-            }
-            else
-            {
-                Inventory[0].Itemstack = resinLogStack;
+                else
+                {
+                    Inventory[0].Itemstack = resinLogStack;
+                }
             }
 
             UpdateAsset();
@@ -174,9 +196,21 @@ namespace ResinVessel
             {
                 if (obj.Name == "transientProps")
                 {
-                    leakingLogTransientProps = obj;
+                    LeakingLogTransientProps = obj;
                 }
             }
+        }
+
+        public override void ToTreeAttributes(ITreeAttribute tree)
+        {
+            base.ToTreeAttributes(tree);
+            tree.SetDouble("LastHarvested", LastHarvested);
+        }
+
+        public override void FromTreeAttributes(ITreeAttribute tree, IWorldAccessor worldForResolving)
+        {
+            base.FromTreeAttributes(tree, worldForResolving);
+            LastHarvested = tree.GetDouble("LastHarvested");
         }
     }
 }

@@ -3,7 +3,7 @@
   "modid": "resinvessel",
   "name": "resinvessel",
   "author": "Alex",
-  "description": "A vessel wich captures resin if placed on a leaking pine",
+  "description": "A vessel which captures resin if placed on a leaking pine",
   "version": "1.0.0",
   "dependency": {
     "game": "1.14.5"
