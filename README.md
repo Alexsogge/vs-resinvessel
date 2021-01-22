@@ -1,5 +1,16 @@
 # vs-resinvessel
-Mod for the game vintage story
+Mod for the game vintage story. It adds a small vessel, which can be attached to leaking logs to collect resin. Resin is collected automatically, so you don't have to collect it immediatly. 
+Instead you can gather it all together after several ingame weeks, or whenever you want to. At least until one stack of resin is not reached :wink:
+
+Build status: [![CircleCI](https://circleci.com/gh/Alexsogge/vs-resinvessel.svg?style=shield )](https://circleci.com/gh/circleci/circleci-docs)
+
+<img src="docs/images/emptyvessel_resinlog.png?raw=true" width="400" /> <img src="docs/images/filledvessel.png?raw=true" width="400" />
+
+## How to install
+
+1. Grab the `ResinVessel.zip` from the latest release here https://github.com/Alexsogge/vs-resinvessel/releases
+2. Put it in your local Mods folder
+3. (optional) If you are playing on a remote server you have to put it in the servers mods folder too
 
 ## How to develop
 
