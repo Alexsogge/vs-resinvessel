@@ -10,7 +10,7 @@ Build status: [![CircleCI](https://circleci.com/gh/Alexsogge/vs-resinvessel.svg?
 
 1. Grab the `ResinVessel.zip` from the latest release here https://github.com/Alexsogge/vs-resinvessel/releases
 2. Put it in your local Mods folder
-2.1. If you are playing on a remote server you have to put it in the servers mods folder too
+3. (optional) If you are playing on a remote server you have to put it in the servers mods folder too
 
 ## How to develop
 
