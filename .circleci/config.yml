@@ -9,12 +9,12 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - main
       - test-build:
           filters:
             branches:
               ignore:
-                - master 
+                - main 
 
 jobs:
   test-build:
