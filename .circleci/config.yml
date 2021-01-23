@@ -33,4 +33,5 @@ jobs:
       #    docker_layer_caching: true
       # build Docker image
       - run: docker build -t trigrab/vs-resinvessel:$CIRCLE_BRANCH .
+      - run: docker run trigrab/vs-resinvessel:$CIRCLE_BRANCH bash -c "cd /code && ci/isNewRelease.sh"
       - run: docker run trigrab/vs-resinvessel:$CIRCLE_BRANCH bash -c "/root/go/bin/ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} v\$(cat /release/version).${CIRCLE_BUILD_NUM} /ResinVessel.zip"
