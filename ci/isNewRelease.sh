@@ -1,15 +1,15 @@
 #!/bin/bash
 
-REPO=$(cat modinfo.json | jq -r '.["website"]')
-echo "Extracted repo url: $REPO"
-VAR1=$(cat modinfo.json | jq -r '.["version"]')
-echo "Version in this commit: $VAR1" 
-VAR2=$(curl -LsS "${REPO}/raw/main/modinfo.json" | jq -r '.["version"]')
-echo "Version on main in repo: $VAR2" 
+source ci/vercomp.script
 
-if [[ "$VAR1" == "$VAR2" ]]; then
-    echo "Version string was not changed: $VAR1, $VAR2"
-    exit 1
+REPO=$(cat modinfo.json | jq -r '.["website"]')
+VAR1=$(cat modinfo.json | jq -r '.["version"]')
+VAR2=$(curl -LsS "${REPO}/raw/main/modinfo.json" | jq -r '.["version"]')
+
+vercomp $VAR1 $VAR2
+if [[ $? == 2 ]]; then
+  echo "Version string was not changed: $VAR2 -> $VAR1"
+  exit 1
 else
-    echo "New Version: $VAR2"
+  echo "New Version will be: $VAR1 (prev: $VAR2)"
 fi
