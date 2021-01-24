@@ -26,3 +26,4 @@ WORKDIR /release
 
 RUN cp /code/bin/Release/resinvessel/resinvessel.dll . && cp -r /code/assets . && cp /code/modinfo.json .
 RUN zip -r /ResinVessel.zip *
+RUN cat modinfo.json | jq -r '.["version"]' > /release/version

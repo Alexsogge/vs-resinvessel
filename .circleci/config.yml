@@ -51,4 +51,4 @@ jobs:
       - attach_workspace:
           at: /docker
       - run: docker load -i /docker/vs-resinvessel
-      - run: docker run trigrab/vs-resinvessel:$CIRCLE_BRANCH bash -c "/root/go/bin/ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} v\$(cat /release/version).${CIRCLE_BUILD_NUM} /ResinVessel.zip"
+      - run: docker run trigrab/vs-resinvessel:$CIRCLE_BRANCH bash -c "/root/go/bin/ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} v\$(cat /release/version) /ResinVessel.zip"
