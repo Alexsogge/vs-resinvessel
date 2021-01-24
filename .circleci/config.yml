@@ -11,12 +11,15 @@ workflows:
             branches:
               only:
                 - main
+          requires:
+            - build
       - version_compare:
           filters:
             branches:
               ignore:
                 - main
-      
+          requires:
+            - build
 
 
 jobs:
