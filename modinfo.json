@@ -1,11 +1,12 @@
 {
   "type": "code",
+  "name": "ResinVessel",
   "modid": "resinvessel",
-  "name": "resinvessel",
   "author": "Alex",
-  "description": "A vessel which captures resin if placed on a leaking pine",
-  "version": "1.0.0",
+  "description": "A vessel which captures resin if placed on a leaking log",
+  "website": "https://github.com/Alexsogge/vs-resinvessel",
+  "version": "1.0.1",
   "dependency": {
-    "game": "1.14.5"
+    "game": "1.14.7"
   }
 }
