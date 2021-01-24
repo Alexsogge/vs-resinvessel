@@ -44,7 +44,7 @@ jobs:
       - attach_workspace:
           at: /tmp/docker
       - run: docker load -i /tmp/docker/vs-resinvessel
-      - run: docker run trigrab/vs-resinvessel:$CIRCLE_BRANCH bash -c "cd /code && ci/isNewRelease.sh"
+      - run: docker run trigrab/vs-resinvessel:$CIRCLE_BRANCH bash -c "cd /code && chmod +x ci/isNewRelease.sh && ./ci/isNewRelease.sh"
   deploy:
     machine: true
     steps:
