@@ -86,7 +86,7 @@
   },
   "replaceable": 400,
   "resistance": 1.5,
-  "maxStackSize": 1,
+  "maxStackSize": 4,
   "lightAbsorption": 0,
   "sounds": {
     "place": "game:walk/stone",
