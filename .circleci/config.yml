@@ -1,7 +1,7 @@
 version: 2.1
 
 workflows:
-  my-workflow:
+  default-workflow:
     jobs:
       - build
       - deploy:
@@ -32,9 +32,9 @@ jobs:
       # build Docker image
       - run: docker build -t trigrab/vs-resinvessel:$CIRCLE_BRANCH .
       - run: mkdir /docker
-      - run: docker save -o /docker/vs-resinvessel trigrab/vs-resinvessel:$CIRCLE_BRANCH
+      - run: docker save -o /tmp/docker/vs-resinvessel trigrab/vs-resinvessel:$CIRCLE_BRANCH
       - persist_to_workspace:
-          root: /docker
+          root: /tmp/docker
           paths:
            - vs-resinvessel
 
@@ -42,8 +42,8 @@ jobs:
     machine: true
     steps:
       - attach_workspace:
-          at: /docker
-      - run: docker load -i /docker/vs-resinvessel
+          at: /tmp/docker
+      - run: docker load -i /tmp/docker/vs-resinvessel
       - run: docker run trigrab/vs-resinvessel:$CIRCLE_BRANCH bash -c "cd /code && ci/isNewRelease.sh"
   deploy:
     machine: true
