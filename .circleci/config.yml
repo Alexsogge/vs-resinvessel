@@ -14,8 +14,8 @@ workflows:
       - version_compare:
           filters:
             branches:
-              only:
-                - /refs/pull\/.*\:main
+              ignore:
+                - main
       
 
 
@@ -28,16 +28,24 @@ jobs:
       #    docker_layer_caching: true
       # build Docker image
       - run: docker build -t trigrab/vs-resinvessel:$CIRCLE_BRANCH .
+      - run: mkdir /docker
+      - run: docker save -o /docker/vs-resinvessel trigrab/vs-resinvessel:$CIRCLE_BRANCH
+      - persist_to_workspace:
+          root: /docker
+          paths:
+           - vs-resinvessel
+
   version_compare:
     machine: true
     steps:
-      - checkout
+      - attach_workspace:
+          at: /docker
+      - run: docker load -i /docker/vs-resinvessel
       - run: docker run trigrab/vs-resinvessel:$CIRCLE_BRANCH bash -c "cd /code && ci/isNewRelease.sh"
   deploy:
     machine: true
     steps:
-      - checkout
-      # - setup_remote_docker:
-      #    docker_layer_caching: true
-      # build Docker image
+      - attach_workspace:
+          at: /docker
+      - run: docker load -i /docker/vs-resinvessel
       - run: docker run trigrab/vs-resinvessel:$CIRCLE_BRANCH bash -c "/root/go/bin/ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} v\$(cat /release/version).${CIRCLE_BUILD_NUM} /ResinVessel.zip"
