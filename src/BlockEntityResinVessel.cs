@@ -58,9 +58,13 @@ namespace ResinVessel
                 {
                     if (Api.Side == EnumAppSide.Server)
                     {
-                        BlockBehaviorHarvestable harvestableLog = GetBlockBehaviorHarvestable(leakingLogBlock);
-                        HarvestResin(harvestableLog);
-                        ReplaceWithHarvested(LeakingLogBlockPos);
+                        ItemStack resinVesselstack = Inventory[0].Itemstack;
+                        if (resinVesselstack.Item.MaxStackSize > resinVesselstack.StackSize)
+                        {
+                            BlockBehaviorHarvestable harvestableLog = GetBlockBehaviorHarvestable(leakingLogBlock);
+                            HarvestResin(harvestableLog);
+                            ReplaceWithHarvested(LeakingLogBlockPos);
+                        }
                         LastHarvested = Api.World.Calendar.TotalHours;
                         MarkDirty();
                     }
@@ -147,7 +151,8 @@ namespace ResinVessel
         private void HarvestResin(BlockBehaviorHarvestable behavior)
         {
             ItemStack resinVesselstack = Inventory[0].Itemstack;
-            var missedHarvests = Math.Floor((Api.World.Calendar.TotalHours - LastHarvested) / InGameHours);
+            var missedHarvests = (int) Math.Floor((Api.World.Calendar.TotalHours - LastHarvested) / InGameHours);
+            missedHarvests = Math.Max(missedHarvests, 1);  // at this point we are sure that there is at least one resin -> minimum 1 harvest!
 
             float dropRate = 1; // normally multiplied with player harvestrate
 
