@@ -62,6 +62,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\resinvessel\textures\block\resinvessel\ceramic.png" />
     <Content Include="modinfo.json" />
   </ItemGroup>
   <ItemGroup />
@@ -74,6 +75,10 @@
   <ItemGroup>
     <None Include="assets\resinvessel\blocktypes\resinvessel.json" />
     <None Include="assets\resinvessel\lang\en.json" />
+    <None Include="assets\resinvessel\recipes\clayforming\resinvessel.json" />
+    <None Include="assets\resinvessel\recipes\clayforming\z_fourresinvessel.json" />
+    <None Include="assets\resinvessel\shapes\block\resinvessel\base.json" />
+    <None Include="assets\resinvessel\shapes\block\resinvessel\filled.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
