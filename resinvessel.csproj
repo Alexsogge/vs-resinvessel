@@ -75,6 +75,7 @@
   <ItemGroup>
     <None Include="assets\resinvessel\blocktypes\resinvessel.json" />
     <None Include="assets\resinvessel\lang\en.json" />
+    <None Include="assets\resinvessel\recipes\clayforming\fourresinvessel.json" />
     <None Include="assets\resinvessel\recipes\clayforming\resinvessel.json" />
     <None Include="assets\resinvessel\shapes\block\resinvessel\base.json" />
     <None Include="assets\resinvessel\shapes\block\resinvessel\filled.json" />
