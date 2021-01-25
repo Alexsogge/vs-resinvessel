@@ -59,7 +59,7 @@ namespace ResinVessel
                     if (Api.Side == EnumAppSide.Server)
                     {
                         ItemStack resinVesselstack = Inventory[0].Itemstack;
-                        if (resinVesselstack.Item.MaxStackSize > resinVesselstack.StackSize)
+                        if (Inventory[0].Itemstack == null || resinVesselstack.Item.MaxStackSize > resinVesselstack.StackSize)
                         {
                             BlockBehaviorHarvestable harvestableLog = GetBlockBehaviorHarvestable(leakingLogBlock);
                             HarvestResin(harvestableLog);
