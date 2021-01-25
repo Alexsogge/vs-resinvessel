@@ -5,7 +5,7 @@
   "author": "Alex",
   "description": "A vessel which captures resin if placed on a leaking log",
   "website": "https://github.com/Alexsogge/vs-resinvessel",
-  "version": "1.0.2",
+  "version": "1.0.2-fix",
   "dependency": {
     "game": "1.14.7"
   }
